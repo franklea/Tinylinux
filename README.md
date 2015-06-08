@@ -1,13 +1,13 @@
 # Tinylinx
 Homework for AOS course , aims to build a tiny linux kernel with linux-4.04 and busybox 1.23.2. The kernel should include basic network functions.
 
-How to do ：
+# How to do ：
 
-# Qemu:
+## Qemu:
 
      sudo apt-get install qemu
 
-# Compile the Linux Kerne
+## Compile the Linux Kernel
 1.  Download the linux kernel source code (linux-4.04) from www.kernel.org
 
 2.  Download BusyBox 1.23.2
@@ -104,6 +104,10 @@ How to do ：
 
      echo "Welcome to my tiny Linux ... "
      
+     After edit the rcS file , we make it executable:
+
+     sudo chmod a+x rcS
+	
      4.6) Configure the network 
      
           In this step , you may come across this problem :
