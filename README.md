@@ -9,11 +9,11 @@ Qemu:
 
 Compile the Linux Kernel:
 
-1.Download the linux kernel source code (linux-4.04) from www.kernel.org
+1. Download the linux kernel source code (linux-4.04) from www.kernel.org
 
-2.Download BusyBox 1.23.2
+2. Download BusyBox 1.23.2
 
-3.Build the Linux Kernel"
+3. Build the Linux Kernel"
 
      3.1)Install ncurses to use “make menuconfig”;
 
@@ -25,7 +25,7 @@ Compile the Linux Kernel:
 
      ./arch/x86/boot/bzImage
 
-4.Prepare a root file system for the kernel .
+4. Prepare a root file system for the kernel .
 
       4.1) Prepare a 4M block file , here we can still make it smaller, it’s all up to you . 
 
@@ -131,3 +131,6 @@ Compile the Linux Kernel:
      
      sudo qemu-system-x86_64 -kernel linux-4.0.4/arch/x86_64/boot/bzImage -initrd busyboxinitrd4M.img -append "root=/dev/ram init=/init" -netdev user,id=network0 -device e1000,netdev=network0 &
 
+6. Test the network
+     
+     I build a http server and use "wget" to download a file , and it works!
