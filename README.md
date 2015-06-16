@@ -137,3 +137,51 @@ Homework for AOS course , aims to build a tiny linux kernel with linux-4.04 and 
 6. Test the network
      
      I build a http server and use "wget" to download a file , and it works!
+
+
+=======================================================
+#Kernel Mode Linux
+
+参考：http://www.yl.is.s.u-tokyo.ac.jp/~tosh/kml/
+
+目的：在内核态执行用户程序。在Kernel Mode Linux中，用户程序能够作为用户进程执行，且拥有kernel mode的权限。
+
+具体是下载了网页提供的Patch，打上patch，并使用Tinylinux的config文件，编译，成功。
+在rootfs中创建trusted文件夹，并将测试程序放入trusted路径中，进行测试。
+
+测试程序1：
+‘''
+int main(int argc, char* argv[])
+{
+        __asm__ __volatile__("cli");
+        for(;;);
+        return 0;
+}
+
+‘''
+
+通过查看程序是否能够关中断来判断是否是内核权限。
+
+测试程序2：
+‘''
+#include <stdio.h>
+#include <stdint.h>
+int main()
+{
+        uint32_t cs;
+        asm volatile("mov %%cs, %0" : "=r"(cs));
+        printf("Privilege level: %x\n",cs & 0x3);
+        return 0;
+}
+‘''
+
+打印CS寄存器的值，查看当前特权级来判断是否是内核态。
+
+问题：
+
+1.直接使用4M大小的rootfs，系统启动正常。但由于测试程序需要被静态编译，编译后可执行文件约850KB，文件系统空间不足。
+
+2.考虑使用8M大小的rootfs，建立好之后，启动，mount fs失败，发现是ramdisk最大为4M，超限，无法启动。使用lzma对roofs进行压缩，压缩后大小为1.1M。fs mount成功。
+
+3.提示Not syncing: Request init /init failed错误，请求init程序失败，因为在启动选项中已经对root和init进行了指定，不知道为何找不到 = =
+
