@@ -151,27 +151,27 @@ Homework for AOS course , aims to build a tiny linux kernel with linux-4.04 and 
 
 测试程序1：
 '''
-int main(int argc, char* argv[])
-{
-        __asm__ __volatile__("cli");
-        for(;;);
-        return 0;
-}
+	int main(int argc, char* argv[])
+	{
+	        __asm__ __volatile__("cli");
+	        for(;;);
+	        return 0;
+	}
 '''
 
 通过查看程序是否能够关中断来判断是否是内核权限。
 
 测试程序2：
 '''
-#include <stdio.h>
-#include <stdint.h>
-int main()
-{
-        uint32_t cs;
-        asm volatile("mov %%cs, %0" : "=r"(cs));
-        printf("Privilege level: %x\n",cs & 0x3);
-        return 0;
-}
+	#include <stdio.h>
+	#include <stdint.h>
+	int main()
+	{
+        	uint32_t cs;
+        	asm volatile("mov %%cs, %0" : "=r"(cs));
+        	printf("Privilege level: %x\n",cs & 0x3);
+        	return 0;
+	}
 '''
 
 打印CS寄存器的值，查看当前特权级来判断是否是内核态。
